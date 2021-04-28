@@ -1,45 +1,43 @@
 const fs = require("fs");
-let information = JSON.parse(fs.readFileSync("./Develop/db/db.json", "utf8"));
+const path = require('path');
+
+
+let database = require("../db/db.json");
+//let information = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
 
 
 function useApiRoutes(app) {
     
     app.get("/api/notes", (req, res) => {
-        res.json(information);
+        res.json(database);
     });
-
-    app.get("/api/notes/:id", (req, res) => {
-        res.json(information[Number(req.params.id)]);
-    });
-
 
     app.post("/api/notes", (req, res) =>  {
         let addedNote = req.body;
-        let noteID = (information.length).toString();
         addedNote.id = noteID;
-        information.push(addedNote);
+        database.push(addedNote);
 
-        fs.writeFileSync("./Develop/db/db.json", JSON.stringify(information), function (err) {
+        fs.writeFileSync("./db/db.json", JSON.stringify(database), function (err) {
             if (err) throw (err);
         });
-        res.json(notesData);
+        res.json(database);
     });
 
     app.delete("/api/notes/:id", (req, res) =>  {
         let selectedID = req.params.id;
         let numOfIDs = 0;
 
-        information = information.filter(note => {
+        database = database.filter(note => {
             return note.id != selectedID;
         });
 
-        for (note of information) {
+        for (note of database) {
             note.id = numOfIDs.toString();
             numOfIDs++;
         }
 
-        fs.writeFileSync("./Develop/db/db.json", JSON.stringify(information));
-        res.json(information);
+        fs.writeFileSync("./db/db.json", JSON.stringify(database));
+        res.json(database);
     });
 
 };

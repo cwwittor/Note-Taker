@@ -6,7 +6,12 @@ const apiRoutes = require("./routes/apiRoutes.js");
 const app = express();
 const PORT = process.env.PORT || 3333;
 
-//app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+//app.use("/assets", express.static("./assets"));
+//app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(__dirname, "/public")));
 
 htmlRoutes(app);
 apiRoutes(app);
