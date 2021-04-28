@@ -29,7 +29,7 @@
   The license(s) used for this are the following: Apache
 
   ## Screenshots
-  <img src="./Assets/example-working.png">
+  <img src="/Assets/example-working.png">
 
   ## Contact-Info
   Email: cwwittor@ncsu.edu
